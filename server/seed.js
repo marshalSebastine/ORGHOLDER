@@ -27,8 +27,8 @@ async function run() {
     await client.db("Admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
     const database = client.db(dbconfig.dbname);
-    let orgsseeded = await seedOrgs(database);
-    let users = await seedUsersToOrgs(database);
+    let _orgsseeded = await seedOrgs(database);
+    let _users = await seedUsersToOrgs(database);
     console.log("seeding complete.....")
   } finally {
     // Ensures that the client will close when you finish/error
