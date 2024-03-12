@@ -1,3 +1,4 @@
+const dotenv = require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const session = require('express-session');
@@ -7,7 +8,7 @@ const ApiError = require('./utils/ApiError');
 const { convertErrorToApiError, errorHandler } = require('./middlewares/error');
 const sessionConfig = require('../config/sessionConfig');
 const app = express()
-
+const passport = require("passport");
 
 // set security HTTP headers
 app.use(helmet())
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 // setting up express-session 
 console.log("setting up express session", sessionConfig)
 app.use(session(sessionConfig))
+app.use(passport.authenticate('session'));
 
 // middleware to check for anti-csrf token in requests
 // app.use(csrf(config.csrfsecret)) 

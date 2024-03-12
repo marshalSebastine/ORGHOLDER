@@ -55,6 +55,7 @@ async function seedUsersToOrgs(db) {
         let userIds = [];
         for(let user of usersData){
             user.organisation = org._id
+            user.organisationName = org.name
             user.priviliges = org.roles[user.role].priviliges;
             // @todo: use transation instead to ensure created user id is inserted in organisation collection
             let usrRes = await users.insertOne(user);

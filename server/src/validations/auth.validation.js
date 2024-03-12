@@ -3,8 +3,8 @@ const psswdRegex = require("../utils/validation.utils");
 
 const login = {
     body: Joi.object({
-        email: Joi.string().email().required(),
-        password: Joi.string().pattern(new RegExp(psswdRegex)).required(),
+        username: Joi.string().email().required(),
+        password: Joi.string(),
     }).required(),
     params: Joi.object().keys({
         organisation: Joi.string().required(),
