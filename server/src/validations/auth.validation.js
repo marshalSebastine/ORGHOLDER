@@ -5,10 +5,7 @@ const login = {
     body: Joi.object({
         username: Joi.string().email().required(),
         password: Joi.string(),
-    }).required(),
-    params: Joi.object().keys({
-        organisation: Joi.string().required(),
-      }).required(),
+    }).required()
 }
     
 module.exports = {login}

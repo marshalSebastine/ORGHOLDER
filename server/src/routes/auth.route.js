@@ -2,7 +2,6 @@ const express = require('express');
 const validateRequest = require('../middlewares/validate');
 const { login } = require('../validations/auth.validation');
 const authController = require("../controllers/auth.controller");
-const catchAsync = require('../utils/catchWrapper.utils');
 var passport = require('passport');
 var LocalStrategy = require('passport-local');
 
@@ -22,12 +21,9 @@ process.nextTick(function() {
 });
 });
 // considered the case of login with email
-// @todo: add middleware to verify the organisation
-router.post('/login/:organisation/',validateRequest(login),passport.authenticate('local', {
-    failureRedirect: '/login'
-  }), (req, res) => {
+router.post('/login',validateRequest(login),passport.authenticate('local'), (req, res) => {
     console.log("last wanted middlewarte callied")
-    res.status(200).json({ message: 'Authentication successful' });
+    res.status(200).json({ message: 'Authentication successful', redirectUrl: `/home.html`});
   })
 
 module.exports = router

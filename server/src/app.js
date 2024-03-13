@@ -9,17 +9,25 @@ const { convertErrorToApiError, errorHandler } = require('./middlewares/error');
 const sessionConfig = require('../config/sessionConfig');
 const app = express()
 const passport = require("passport");
+const cors = require('cors');
+const path = require("path");
 
 // set security HTTP headers
-app.use(helmet())
+// app.use(helmet())
 
 // parse json request body
 app.use(express.json());
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
-//use middlewares to sanitize db and script injection 
+let dir = path.resolve(__dirname, '..', '..');
+let buildFolder = path.resolve(dir, 'client', 'build')
+app.use(express.static(buildFolder));
+
+
+
 
 // setting up express-session 
 console.log("setting up express session", sessionConfig)
@@ -33,9 +41,17 @@ app.use(passport.authenticate('session'));
 app.use('/auth',authRoutes)
 
 
-app.use((req,res,next) => {
-    next(new ApiError(httpStatus.NOT_FOUND,"no such endpoint"))
-})
+app.get('*', (req, res) => {
+    let dir = path.resolve(__dirname, '..', '..');
+    let staticFolder = path.resolve(dir, 'client', 'build', 'index.html')
+    console.log("resolved staticfolder", staticFolder)
+    res.sendFile(staticFolder);
+});
+    
+
+// app.use((req,res,next) => {
+//     next(new ApiError(httpStatus.NOT_FOUND,"no such endpoint"))
+// })
 
 app.use(convertErrorToApiError)
 
