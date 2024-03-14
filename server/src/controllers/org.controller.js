@@ -1,5 +1,6 @@
 const httpStatus = require("http-status");
 const orgModel = require("../db/db.organisation");
+const userModel = require("../db/db.user.js");
 const ApiError = require("../utils/ApiError");
 
 const fetchRole = async (req, res, next) => {
@@ -11,5 +12,11 @@ const fetchRole = async (req, res, next) => {
     res.status(httpStatus.OK).json({ roles: Object.keys(org.roles)}); 
 }
 
+const getOrgUsers = async (req, res, next) => {
 
-module.exports = {fetchRole};
+}
+
+
+
+
+module.exports = {fetchRole, getOrgUsers};
