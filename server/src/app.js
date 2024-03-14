@@ -3,6 +3,7 @@ const express = require('express');
 const helmet = require('helmet');
 const session = require('express-session');
 const authRoutes = require('./routes/auth.route');
+const orgRoutes = require("./routes/orgs.route");
 const { convertErrorToApiError, errorHandler } = require('./middlewares/error');
 const sessionConfig = require('../config/sessionConfig');
 const app = express()
@@ -37,7 +38,7 @@ app.use(passport.authenticate('session'));
 
 //setting up routes
 app.use('/auth',authRoutes)
-
+app.use('/org',orgRoutes)
 
 app.get('*', (req, res) => {
     let dir = path.resolve(__dirname, '..', '..');

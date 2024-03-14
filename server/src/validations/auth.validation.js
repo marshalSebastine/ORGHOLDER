@@ -1,5 +1,4 @@
 const Joi = require('joi');
-const psswdRegex = require("../utils/validation.utils");
 
 const login = {
     body: Joi.object({

@@ -2,6 +2,7 @@ import "./Login.style.css";
 import '@fontsource/inter';
 import { useState } from "react";
 import { CssVarsProvider } from '@mui/joy/styles';
+import { postData } from "../../utils/request.utils";
 import Sheet from '@mui/joy/Sheet';
 import Typography from '@mui/joy/Typography';
 import FormControl from '@mui/joy/FormControl';
@@ -17,32 +18,20 @@ const Login = () => {
     const [emailValue, setEmailValue] = useState("");
     const [psswdValue, setPsswdValue] = useState("");
 
+    const [ermessage, setErmessage] = useState("");
 
     const handleLogin = (evt) => {
         const servedPort = process.env.REACT_APP_SERVED_PORT
         const loginposturl = `http://localhost:${servedPort}/auth/login`
         let body = { "username": emailValue, "password": psswdValue };
-        postData(loginposturl, body).then((data) => {
-            console.log(data); // JSON data parsed by `data.json()` call
+        postData(loginposturl, body).then((resp) => {
+            console.log(resp); // JSON data parsed by `data.json()` call
+            if(resp.status === 200) {
+                // go into dash board after setting user data
+            } else {
+                setErmessage(resp.message)
+            }
         });
-    }
-
-    async function postData(url = "", data = {}) {
-        // Default options are marked with *
-        const response = await fetch(url, {
-            method: "POST", // *GET, POST, PUT, DELETE, etc.
-            mode: "cors", // no-cors, *cors, same-origin
-            cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: "same-origin", // include, *same-origin, omit
-            headers: {
-                "Content-Type": "application/json",
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            redirect: "follow", // manual, *follow, error
-            referrerPolicy: "no-referrer", // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-            body: JSON.stringify(data), // body data type must match "Content-Type" header
-        });
-        return response.json(); // parses JSON response into native JavaScript objects
     }
 
     const handleTextFieldInput = (evt) => {
@@ -103,8 +92,9 @@ const Login = () => {
                 <Button onClick={handleLogin} sx={{ mt: 1 /* margin top */ }}>
                     Log in
                 </Button>
+                {(ermessage !== "") && <Typography sx={{color: "red"}} level="body-sm">{ermessage}</Typography>}
                 <Typography
-                    endDecorator={<Link href="/sign-up">Sign up</Link>}
+                    endDecorator={<Link href="/signup">Sign up</Link>}
                     fontSize="sm"
                     sx={{ alignSelf: 'center' }}
                 >

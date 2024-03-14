@@ -37,7 +37,10 @@ class DBManager {
     async closeConnection() {
         if(this.client){
             await this.client.close()
+            this.client = null;
+            this.db = null;
         }
+        this.db = null;
     }
 }
 

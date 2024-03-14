@@ -15,6 +15,7 @@ const isUserValid = async (username, password) => {
 
 const addUser = async(user, org) => {
     user.priviliges = org.roles[user.role].priviliges;
+    user.organisation = org._id
     let insertRes = await userModel.insertUser(user);
     if(!insertRes.acknowledged) {
         throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'error inserting user document')
