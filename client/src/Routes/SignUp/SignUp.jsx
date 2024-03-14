@@ -57,9 +57,7 @@ export default function SignUp() {
         setOrgProgress(true);
         getRolesOfOrg(orgName).then((resp) => {
             setOrgProgress(false);
-            console.log("response at meaning", resp, resp.status)
             if (resp.status === 200) {
-                console.log("setting roles", resp.roles, orgName)
                 setRoles(resp.roles);
                 setVerifiedOrd(orgName);
             } else {
@@ -85,11 +83,9 @@ export default function SignUp() {
             organisationName: verifiedOrg,
         }
         };
-        console.log("user data formed", user)
         const signupUrl = "/auth/signup"
         postData(signupUrl, user).then(res => {
             setSignUpProgress(false);
-            console.log(res);
             if (res.status === 200) {
                 alert("User Creation Success....")
                 navigate("/login")

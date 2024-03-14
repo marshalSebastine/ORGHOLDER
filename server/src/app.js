@@ -43,7 +43,6 @@ app.use('/org',orgRoutes)
 app.get('*', (req, res) => {
     let dir = path.resolve(__dirname, '..', '..');
     let staticFolder = path.resolve(dir, 'client', 'build', 'index.html')
-    console.log("resolved staticfolder", staticFolder)
     res.sendFile(staticFolder);
 });
     

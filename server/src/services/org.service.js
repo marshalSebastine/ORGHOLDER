@@ -5,11 +5,9 @@ const httpStatus = require("http-status");
 
 const getAllUsersOfOrg = async (orgName) => {
     try {
-        console.log("trying to get user of org", orgName)
         let org =  await orgModel.getOrgUsrsByName(orgName);
         if(org) {
             let users = await userModel.getUsersOfID(org.users);
-            console.log("users from db for org", users)
             if(users) {
                 return users
             } else {

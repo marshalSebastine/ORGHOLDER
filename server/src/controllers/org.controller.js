@@ -18,11 +18,9 @@ const getOrgUsers = async (req, res, next) => {
     // check for privileges
     let usr  = req.user
     let privileges = usr.priviliges
-    console.log("privileges of sesssion user is", privileges)
     if(privileges.includes(Privileges.readAllUsers)){
         let users = await getAllUsersOfOrg(usr.organisationName)
         res.status(httpStatus.OK).json({ users: users}); 
-        console.log("users are ", users);
     } else {
         throw new ApiError(httpStatus.UNAUTHORIZED, "user dont have privilge to read all org users")
     }

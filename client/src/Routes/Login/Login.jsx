@@ -32,10 +32,8 @@ const Login = () => {
         setLoginProgress(true);
         postData(loginposturl, body).then((resp) => {
             setLoginProgress(false);
-            console.log(resp); 
             if(resp.status === 200) {
                 resp.json().then((data) => {
-                    console.log("going to set user", data.user)
                     userDispatch({type: "setuser", user: data.user})
                     navigate("/dashboard");
                 })

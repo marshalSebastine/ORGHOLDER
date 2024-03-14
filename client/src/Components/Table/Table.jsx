@@ -8,9 +8,9 @@ export default function TableStructure({users, type}) {
       <caption style={{fontSize: "14px", color: "white"}}>{`${type} Table.`}</caption>
       <thead>
         <tr>
-          <th style={{ width: '40%' }}>Mail Id</th>
-          <th>fullName</th>
-          <th>Password</th>
+          <th style={{ width: '40%' , fontSize: "18px"}}>Mail Id</th>
+          <th style={{fontSize: "18px"}}>fullName</th>
+          <th style={{fontSize: "18px"}}>Password</th>
         </tr>
       </thead>
       <tbody>

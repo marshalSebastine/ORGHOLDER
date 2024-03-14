@@ -13,7 +13,6 @@ class OrgModal {
     async getOrgUsrsByName(orgName) {
         await this.setConnection();
         let qry = { name: {$eq: orgName} };
-        console.log("query is", qry)
         let options = {projection: {users: true}}
         return await this.orgCollection.findOne(qry, options);
     }
