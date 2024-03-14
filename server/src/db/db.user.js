@@ -1,4 +1,4 @@
-const { getDatabase } = require("./connection.db");
+const dbInstance = require("./connection.db");
 const dbconfig = require("../../config/dbconfig");
 
 class UserModal {
@@ -15,9 +15,21 @@ class UserModal {
         return await this.userCollection.findOne();
     }
 
+
+    async insertUser(user) {
+        await this.setConnection()
+        return await this.userCollection.insertOne(user);
+    }
+
+    async deleteUser(id) {
+        await this.setConnection();
+        let filter = {_id: id}
+        return await this.userCollection.deleteOne(filter)
+    }
+
     async setConnection() {
         if(!this.userCollection) {
-            let db = await getDatabase()
+            let db = await dbInstance.getDb()
             this.userCollection = db.collection(dbconfig.usercollectioname) 
         }
     }

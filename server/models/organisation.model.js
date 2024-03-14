@@ -1,5 +1,5 @@
 let org = {
-        name: faker.company.name(),
+        name: faker.company.name(), // add schema validation for unique company name
         users: null,
         invitations: null,   // to handle signup inviatation flow [{invitationcode: {mailid, role}}]
         roles: null // of types roles

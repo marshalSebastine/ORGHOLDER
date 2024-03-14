@@ -1,7 +1,7 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const {Roles, Privileges} = require("./config/rolesAndPrevilges.config");
 const dotenv = require('dotenv');
-const { faker, ro } = require('@faker-js/faker');
+const { faker } = require('@faker-js/faker');
 const myEnv = dotenv.config();
 const dbconfig = require("./config/dbconfig");
 // Replace the placeholder with your Atlas connection string

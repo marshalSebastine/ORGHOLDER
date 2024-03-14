@@ -1,10 +1,9 @@
-const { startConnection, closeConnection} = require("../../src/db/connection.db");
+const dbInstance = require("../../src/db/connection.db");
 
 const setUpDB = () => {
-    let client = undefined
     beforeAll(async () => {
         try {
-            client = await startConnection()
+            await dbInstance.getDb()
             console.log('Connection has been established successfully.');
           } catch (error) {
             console.error('Unable to connect to the database:', error);
@@ -12,7 +11,7 @@ const setUpDB = () => {
     })
 
     afterAll(async () => {
-        await closeConnection(client)
+        await dbInstance.closeConnection()
     });
 }
 

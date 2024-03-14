@@ -1,7 +1,9 @@
 const request = require("supertest");
 const app = require("../../src/app");
 const userModel = require("../../src/db/db.user");
+const userFixture = require("../fixtures/user.fixture");
 const setUpTestDB = require("../utils/setupdb.util");
+const { faker } = require('@faker-js/faker');
 
 setUpTestDB()
 
@@ -39,5 +41,34 @@ describe("Auth routes", () => {
                 expect(resp.header['set-cookie']).toBeDefined()
                 expect(resp.statusCode).toBe(200);
             })
+    })
+
+    describe("POST /auth/signup", () => {
+
+        test("should throw validation err if the request body do not have all fields and its value", async () => {
+            const resp = (await request(app).post("/auth/signup").send({user: {password: "1233"}}))
+            expect(resp.statusCode).toBe(400);
+        })
+
+        test("should send 409 on existing user mail",async () => {
+            let existingUser = await userModel.getAnUser();
+            expect(existingUser).toBeDefined();
+            delete existingUser._id
+            delete existingUser.priviliges
+            delete existingUser.organisation
+            const resp = (await request(app).post("/auth/signup").send({user: existingUser}))
+            expect(resp.statusCode).toBe(409);
+        })
+
+        test("should create a valid new user", async() => {
+            let newUsers = await userFixture.getUsersData(1);
+            user = newUsers[0];
+            delete user.priviliges
+            delete user.organisation
+            expect(user).toBeDefined();
+            const resp = (await request(app).post("/auth/signup").send({user: user}))
+            expect(resp.statusCode).toBe(200);
+
+        })
     })
 })
