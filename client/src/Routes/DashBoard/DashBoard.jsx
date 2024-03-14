@@ -35,7 +35,7 @@ export default function Dashboard() {
             </div>
             <div className="board">
                 <div className="tablewrapper">
-                   {(userList.length !== 0) && <TableStructure users={userList} type={"All Users"}/>}
+                   {(userList.length !== 0) && <TableStructure users={userList}/>}
                 </div>
             </div>
         </div>
