@@ -1,5 +1,6 @@
 const dbInstance = require("./connection.db");
 const dbconfig = require("../../config/dbconfig");
+const { ObjectId } = require("mongodb");
 
 class OrgModal {
 
@@ -7,6 +8,13 @@ class OrgModal {
         await this.setConnection();
         let qry = {name: {$eq: orgname}};
         let options = {projection: {name: true, _id: true, roles: true}}
+        return await this.orgCollection.findOne(qry, options);
+    }
+    async getOrgUsrsByName(orgName) {
+        await this.setConnection();
+        let qry = { name: {$eq: orgName} };
+        console.log("query is", qry)
+        let options = {projection: {users: true}}
         return await this.orgCollection.findOne(qry, options);
     }
 

@@ -1,3 +1,5 @@
+const userModel = require("../db/db.user");
+
 const validateSessionUser = async (req, res, next) => {
     let usermail = req.user.mailId;
     console.log("mail id in session", usermail);

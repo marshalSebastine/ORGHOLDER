@@ -26,6 +26,10 @@ class UserModal {
         let filter = {_id: id}
         return await this.userCollection.deleteOne(filter)
     }
+    async getUsersOfID(userIds){
+        await this.setConnection()
+        return await this.userCollection.find({ _id: { $in: userIds } }).toArray();
+    }
 
     async setConnection() {
         if(!this.userCollection) {

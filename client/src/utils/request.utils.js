@@ -30,4 +30,9 @@ export async function getRolesOfOrg(orgName) {
 
 }
 
+export async function getAllUsersOfOrg(){
+    let url = `/org/users`
+    return await fetch(url);
+}
+
 
