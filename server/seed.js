@@ -41,6 +41,7 @@ async function seedOrgs(db) {
     const orgsData = getOrganisationData(2);
     // Prevent additional documents from being inserted if one fails
     const options = { ordered: true };
+    console.log("organisations inserted", orgsData)
     const result = await orgs.insertMany(orgsData, options)
     return result
 };
@@ -58,6 +59,7 @@ async function seedUsersToOrgs(db) {
             user.organisationName = org.name
             user.priviliges = org.roles[user.role].priviliges;
             // @todo: use transation instead to ensure created user id is inserted in organisation collection
+            console.log("user added", user)
             let usrRes = await users.insertOne(user);
             userIds.push(usrRes.insertedId);
         }
