@@ -10,26 +10,37 @@ import FormLabel from '@mui/joy/FormLabel';
 import Input from '@mui/joy/Input';
 import Button from '@mui/joy/Button';
 import Link from '@mui/joy/Link';
-
+import { useContext } from "react";
+import { UserDispatchContext } from "../../Reducers/userReducer";
+import { useNavigate } from "react-router-dom";
 
 
 const Login = () => {
 
     const [emailValue, setEmailValue] = useState("");
     const [psswdValue, setPsswdValue] = useState("");
-
+    const navigate = useNavigate();
+    const [logingProgress, setLoginProgress] = useState(false);
     const [ermessage, setErmessage] = useState("");
+
+    const userDispatch = useContext(UserDispatchContext);
 
     const handleLogin = (evt) => {
         const servedPort = process.env.REACT_APP_SERVED_PORT
         const loginposturl = `http://localhost:${servedPort}/auth/login`
         let body = { "username": emailValue, "password": psswdValue };
+        setLoginProgress(true);
         postData(loginposturl, body).then((resp) => {
-            console.log(resp); // JSON data parsed by `data.json()` call
+            setLoginProgress(false);
+            console.log(resp); 
             if(resp.status === 200) {
-                // go into dash board after setting user data
+                resp.json().then((data) => {
+                    console.log("going to set user", data.user)
+                    userDispatch({type: "setuser", user: data.user})
+                    navigate("/dashboard");
+                })
             } else {
-                setErmessage(resp.message)
+                resp.json().then( resp => {setErmessage(resp.message)})
             }
         });
     }
@@ -89,7 +100,7 @@ const Login = () => {
                         onChange={handleTextFieldInput}
                     />
                 </FormControl>
-                <Button onClick={handleLogin} sx={{ mt: 1 /* margin top */ }}>
+                <Button loading={logingProgress} onClick={handleLogin} sx={{ mt: 1 /* margin top */ }}>
                     Log in
                 </Button>
                 {(ermessage !== "") && <Typography sx={{color: "red"}} level="body-sm">{ermessage}</Typography>}
