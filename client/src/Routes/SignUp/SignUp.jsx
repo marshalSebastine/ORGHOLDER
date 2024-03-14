@@ -106,7 +106,7 @@ export default function SignUp() {
     if (verifiedOrg === "") {
         return (
             <FormControl sx={sheetstyle}>
-                <FormLabel>Enter your Organisation name.</FormLabel>
+                <FormLabel>Enter your registered Organisation name.</FormLabel>
                 <Input
                     // html input attribute
                     name="organisation"
